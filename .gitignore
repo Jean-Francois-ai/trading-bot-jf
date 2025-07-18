@@ -1,4 +1,6 @@
 .env
+*.log
 *.pyc
 __pycache__/
 venv/
+roadmaps/
