@@ -17,10 +17,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.info("Début du script bot.py")
 
+# Vérifier le chemin de kalman_filter.py
+try:
+    import utils.kalman_filter
+    logger.info(f"Chemin de kalman_filter.py : {utils.kalman_filter.__file__}")
+except Exception as e:
+    logger.error(f"Erreur vérification chemin kalman_filter.py : {str(e)}")
+
 # Vérifier les dépendances
 try:
     logger.info("Importation des modules utils")
     from utils.data_fetch import fetch_yahoo_returns, fetch_option_chain
+    # Forcer l’importation depuis utils/kalman_filter.py
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
     from utils.kalman_filter import apply_kalman_filter
     from utils.portfolio_fetch import fetch_portfolio
     from utils.reinvestment_handler import reinvest_gains
@@ -94,7 +103,7 @@ async def daily_roadmap():
         kalman_returns = {}
         for symbol, data in returns.items():
             try:
-                kalman_returns[symbol] = apply_kalman_filter(data) if data and len(data) > 0 else [0]
+                kalman_returns[symbol] = apply_kalman_filter(data)
                 logger.info(f"Rendements Kalman pour {symbol} : {kalman_returns[symbol]}")
             except Exception as e:
                 logger.error(f"Erreur Kalman pour {symbol} : {str(e)}")
