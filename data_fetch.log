@@ -1,0 +1,87 @@
+2025-07-17 20:09:30,166 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:09:30,167 INFO: setting up API-client for environment practice
+2025-07-17 20:09:30,167 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:09:30,167 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:09:31,178 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-17 20:09:31,179 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-17 20:09:31,179 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-17 20:09:31,180 INFO: Added job "daily_roadmap" to job store "default"
+2025-07-17 20:09:31,180 INFO: Added job "daily_roadmap" to job store "default"
+2025-07-17 20:09:31,180 INFO: Added job "check_sleep_stop_loss" to job store "default"
+2025-07-17 20:09:31,180 INFO: Scheduler started
+2025-07-17 20:09:31,180 WARNING: Symbole ^VIX non pris en charge
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour SPY : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour QQQ : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour IWM : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 WARNING: Symbole ^VIX non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole ETH-EUR non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole USDC-EUR non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole EURUSD=X non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole GBPUSD=X non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole USDJPY=X non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole XAUUSD=X non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole UKOIL=X non pris en charge
+2025-07-17 20:09:31,180 WARNING: Symbole NGAS=X non pris en charge
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour SPY : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour QQQ : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 ERROR: Erreur Alpaca pour IWM : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:31,180 WARNING: Symbole ^VIX non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole ETH-EUR non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole USDC-EUR non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole EURUSD=X non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole GBPUSD=X non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole USDJPY=X non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole XAUUSD=X non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole UKOIL=X non pris en charge
+2025-07-17 20:09:31,181 WARNING: Symbole NGAS=X non pris en charge
+2025-07-17 20:09:32,966 INFO: HTTP Request: POST https://api.telegram.org/bot7878060308:AAEuqmOF_QUkJ95YWlarae55nz-dlHYbfP4/sendMessage "HTTP/1.1 200 OK"
+2025-07-17 20:09:32,967 ERROR: Erreur Alpaca pour SPY : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:32,967 ERROR: Erreur Alpaca pour QQQ : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:32,967 ERROR: Erreur Alpaca pour IWM : 'NoneType' object has no attribute 'get_bars'
+2025-07-17 20:09:32,967 WARNING: Symbole ^VIX non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole ETH-EUR non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole USDC-EUR non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole EURUSD=X non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole GBPUSD=X non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole USDJPY=X non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole XAUUSD=X non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole UKOIL=X non pris en charge
+2025-07-17 20:09:32,967 WARNING: Symbole NGAS=X non pris en charge
+2025-07-17 20:09:33,091 INFO: HTTP Request: POST https://api.telegram.org/bot7878060308:AAEuqmOF_QUkJ95YWlarae55nz-dlHYbfP4/sendMessage "HTTP/1.1 200 OK"
+2025-07-17 20:22:13,292 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:22:13,293 INFO: setting up API-client for environment practice
+2025-07-17 20:22:13,293 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:22:13,293 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:26:08,144 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:26:08,144 INFO: setting up API-client for environment practice
+2025-07-17 20:26:08,145 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:26:08,145 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:31:16,225 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:31:16,225 INFO: setting up API-client for environment practice
+2025-07-17 20:31:16,225 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:31:16,225 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:36:54,884 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:36:54,884 INFO: setting up API-client for environment practice
+2025-07-17 20:36:54,885 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:36:54,885 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:36:54,978 INFO: Heure actuelle : 2025-07-17 20:36:54.978457, Heure pré-marché : 07:00:00
+2025-07-17 20:46:03,220 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:46:03,220 INFO: setting up API-client for environment practice
+2025-07-17 20:46:03,220 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:46:03,220 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:46:03,232 INFO: Début initialisation du bot
+2025-07-17 20:46:03,237 INFO: Variables d’environnement chargées
+2025-07-17 20:46:03,313 INFO: Bot Telegram initialisé
+2025-07-17 20:46:03,313 INFO: Lancement du bot
+2025-07-17 20:46:03,314 INFO: Démarrage boucle principale
+2025-07-17 20:46:03,314 INFO: Heure actuelle : 2025-07-17 20:46:03.314142, Heure pré-marché : 07:00:00
+2025-07-17 20:46:44,422 ERROR: Erreur connexion Alpaca : REST.__init__() got an unexpected keyword argument 'data_feed'
+2025-07-17 20:46:44,423 INFO: setting up API-client for environment practice
+2025-07-17 20:46:44,423 INFO: Connexion à l’API Oanda réussie.
+2025-07-17 20:46:44,423 INFO: Connexion à l’API Kraken réussie.
+2025-07-17 20:46:44,436 INFO: Début initialisation du bot
+2025-07-17 20:46:44,441 INFO: Variables d’environnement chargées
+2025-07-17 20:46:44,516 INFO: Bot Telegram initialisé
+2025-07-17 20:46:44,516 INFO: Lancement du bot
+2025-07-17 20:46:44,517 INFO: Démarrage boucle principale
+2025-07-17 20:46:44,517 INFO: Heure actuelle : 2025-07-17 20:46:44.517072, Heure pré-marché : 07:00:00

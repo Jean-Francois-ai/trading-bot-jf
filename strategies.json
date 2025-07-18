@@ -1,0 +1,40 @@
+{
+  "roadmap": [
+    {
+      "asset": "EURUSD",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "GBPUSD",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "USDJPY",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "XAUUSD",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "UKOIL",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "NGAS",
+      "alloc": 0.1,
+      "position_type": "buy"
+    },
+    {
+      "asset": "XETHZEUR",
+      "alloc": 0.1,
+      "position_type": "buy"
+    }
+  ],
+  "last_reinvestment": "2025-07-17T20:00:00"
+}

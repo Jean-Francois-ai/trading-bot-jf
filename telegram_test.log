@@ -1,0 +1,6 @@
+2025-07-17 20:51:47,995 INFO: Lancement test Telegram
+2025-07-17 20:51:47,996 INFO: Début test Telegram
+2025-07-17 20:51:47,996 INFO: Variables Telegram : token=7878..., channel_id=-1002755539359
+2025-07-17 20:51:48,071 INFO: Bot Telegram initialisé
+2025-07-17 20:51:48,704 INFO: HTTP Request: POST https://api.telegram.org/bot7878060308:AAEuqmOF_QUkJ95YWlarae55nz-dlHYbfP4/sendMessage "HTTP/1.1 200 OK"
+2025-07-17 20:51:48,705 INFO: Message de test envoyé
