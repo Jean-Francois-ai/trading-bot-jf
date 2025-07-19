@@ -75,7 +75,7 @@ async def binance_roadmap():
             for symbol, ret in valid_returns:
                 try:
                     alloc = (ret / total_weight) * total_btc if total_weight > 0 else 0
-                    if alloc > 0:
+                    if alloc > 0.001:  # Seuil minimum de 0.001 BTC
                         alloc_data = stat_arb_opportunity(symbol, kalman_returns[symbol], None)
                         if alloc_data:
                             alloc_data['alloc'] = min(alloc, 0.05)  # Limite à 5% par actif
