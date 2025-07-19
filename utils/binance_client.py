@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 # Configurer le logging
 logging.basicConfig(
-    filename='/root/trading-bot-jf/binance_client.log',
+    filename='logs/binance_client.log',  # Chemin relatif
     format='%(asctime)s %(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -24,12 +24,12 @@ async def fetch_binance_prices(symbol):
         })
         ticker = await binance.fetch_ticker(symbol)
         await binance.close()
-        if ticker.get('open') is None or ticker.get('last') is None:
+        if not ticker.get('open') or not ticker.get('last'):
             logger.error(f"Prix manquants pour {symbol}")
             return None
         prices = {
-            'open': float(ticker['open']),
-            'close': float(ticker['last'])
+            'open': float(ticker['open'] or 0),
+            'close': float(ticker['last'] or 0)
         }
         logger.info(f"Prix Binance pour {symbol} : {prices}")
         return prices
@@ -50,11 +50,17 @@ async def submit_binance_order(symbol, alloc, position_type):
             logger.error(f"Balance insuffisante : {btc_balance} BTC disponible, requis 0.015 BTC")
             return None
         ticker = binance.get_symbol_ticker(symbol=symbol)
-        current_price = float(ticker['price'])
+        current_price = float(ticker['price'] or 0)
+        if current_price == 0:
+            logger.error(f"Prix invalide pour {symbol}")
+            return None
         quantity = (0.015 * alloc) / current_price
         symbol_info = binance.get_symbol_info(symbol)
         min_qty = float(symbol_info['filters'][2]['minQty'])
         quantity = max(quantity, min_qty)
+        if quantity * current_price < 0.001 * current_price:  # Seuil minimum
+            logger.error(f"Allocation trop faible pour {symbol} : {quantity * current_price} BTC")
+            return None
         order = binance.create_market_order(symbol=symbol, side=position_type.upper(), quantity=quantity)
         logger.info(f"Ordre {position_type} passé pour {symbol} : {order}")
         return order
