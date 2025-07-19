@@ -8,7 +8,7 @@ import sys
 
 # Configurer le logging
 logging.basicConfig(
-    filename='/root/trading-bot-jf/binance_bot.log',
+    filename='logs/binance_bot.log',
     format='%(asctime)s %(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -18,7 +18,7 @@ logger.info("Démarrage du script binance_bot.py")
 # Forcer l’importation depuis utils/
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.binance_client import fetch_binance_prices, submit_binance_order
-from utils.kalman_filter import apply_kalman_filter
+from utils.kalman_filter import apply_kalman_filter, fetch_historical_data
 from utils.stat_arb import stat_arb_opportunity
 
 async def binance_roadmap():
@@ -26,7 +26,7 @@ async def binance_roadmap():
     try:
         logger.info("Début de la génération de la roadmap Binance")
         # Charger les stratégies depuis strategies.json
-        with open('/root/trading-bot-jf/strategies.json', 'r') as f:
+        with open('strategies.json', 'r') as f:
             strategy_json = json.load(f)
         logger.info(f"strategies.json chargé : {strategy_json}")
 
@@ -39,8 +39,10 @@ async def binance_roadmap():
         for symbol in symbols:
             try:
                 prices = await fetch_binance_prices(symbol)
-                if prices and 'close' in prices and 'open' in prices:
-                    returns[symbol] = [(prices['close'] - prices['open']) / prices['open']]
+                historical_data = await fetch_historical_data(symbol)
+                if prices and 'close' in prices and 'open' in prices and prices['open'] != 0:
+                    current_return = (prices['close'] - prices['open']) / prices['open']
+                    returns[symbol] = historical_data + [current_return] if historical_data else [current_return]
                     logger.info(f"Rendements récupérés pour {symbol} : {returns[symbol]}")
                 else:
                     logger.error(f"Données de prix invalides pour {symbol}")
@@ -53,7 +55,7 @@ async def binance_roadmap():
         kalman_returns = {}
         for symbol, data in returns.items():
             try:
-                kalman_returns[symbol] = apply_kalman_filter(data)
+                kalman_returns[symbol] = await apply_kalman_filter(data)
                 if kalman_returns[symbol] and kalman_returns[symbol][-1] == 0:
                     logger.warning(f"Rendement Kalman nul pour {symbol}, ignoré")
                     kalman_returns[symbol] = [0]
@@ -75,7 +77,7 @@ async def binance_roadmap():
             for symbol, ret in valid_returns:
                 try:
                     alloc = (ret / total_weight) * total_btc if total_weight > 0 else 0
-                    if alloc > 0.001:  # Seuil minimum de 0.001 BTC
+                    if alloc >= 0.001:  # Seuil minimum de 0.001 BTC
                         alloc_data = stat_arb_opportunity(symbol, kalman_returns[symbol], None)
                         if alloc_data:
                             alloc_data['alloc'] = min(alloc, 0.05)  # Limite à 5% par actif
@@ -93,7 +95,7 @@ async def binance_roadmap():
                     logger.error(f"Erreur stat_arb_opportunity pour {symbol} : {str(e)}")
 
         # Sauvegarder la roadmap partielle
-        with open('/root/trading-bot-jf/roadmaps/binance_roadmap.json', 'w') as f:
+        with open('roadmaps/binance_roadmap.json', 'w') as f:
             json.dump(roadmap, f, indent=2)
         logger.info(f"Roadmap Binance sauvegardée : {roadmap}")
         return roadmap
