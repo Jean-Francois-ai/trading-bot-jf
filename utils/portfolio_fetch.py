@@ -1,6 +1,6 @@
 import os
 import logging
-from python_binance.client import Client
+from binance.client import Client
 from dotenv import load_dotenv
 
 # Configurer le logging
@@ -35,4 +35,3 @@ def fetch_portfolio():
         portfolio['binance'] = {'balance': 0}
 
     return portfolio
-
