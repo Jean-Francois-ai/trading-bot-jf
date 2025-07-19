@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 # Configurer le logging
 logging.basicConfig(
-    filename='binance_client.log',
+    filename='/root/trading-bot-jf/binance_client.log',
     format='%(asctime)s %(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -24,6 +24,9 @@ async def fetch_binance_prices(symbol):
         })
         ticker = await binance.fetch_ticker(symbol)
         await binance.close()
+        if ticker.get('open') is None or ticker.get('last') is None:
+            logger.error(f"Prix manquants pour {symbol}")
+            return None
         prices = {
             'open': float(ticker['open']),
             'close': float(ticker['last'])
@@ -44,9 +47,14 @@ async def submit_binance_order(symbol, alloc, position_type):
         account = binance.get_account()
         btc_balance = next((float(b['free']) for b in account['balances'] if b['asset'] == 'BTC'), 0)
         if btc_balance < 0.015:
-            logger.error(f"Balance insuffisante : {btc_balance} BTC disponible")
+            logger.error(f"Balance insuffisante : {btc_balance} BTC disponible, requis 0.015 BTC")
             return None
-        quantity = (0.015 * alloc) / float(binance.get_symbol_info(symbol)['filters'][2]['minQty'])
+        ticker = binance.get_symbol_ticker(symbol=symbol)
+        current_price = float(ticker['price'])
+        quantity = (0.015 * alloc) / current_price
+        symbol_info = binance.get_symbol_info(symbol)
+        min_qty = float(symbol_info['filters'][2]['minQty'])
+        quantity = max(quantity, min_qty)
         order = binance.create_market_order(symbol=symbol, side=position_type.upper(), quantity=quantity)
         logger.info(f"Ordre {position_type} passé pour {symbol} : {order}")
         return order
