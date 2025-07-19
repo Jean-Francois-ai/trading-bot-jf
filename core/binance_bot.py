@@ -30,12 +30,15 @@ async def binance_roadmap():
             strategy_json = json.load(f)
         logger.info(f"strategies.json chargé : {strategy_json}")
 
+        # Récupérer les symboles depuis strategies.json
+        symbols = [item['asset'] for item in strategy_json['roadmap']]
+        logger.info(f"Symboles chargés : {symbols}")
+
         # Récupérer les rendements des actifs Binance
-        symbols = ['ETH/EUR', 'BTC/EUR']
         returns = {}
         for symbol in symbols:
             try:
-                returns[symbol] = fetch_binance_prices(symbol)
+                returns[symbol] = await fetch_binance_prices(symbol)
                 logger.info(f"Rendements récupérés pour {symbol} : {returns[symbol]}")
             except Exception as e:
                 logger.error(f"Erreur récupération rendements pour {symbol} : {str(e)}")
@@ -55,13 +58,13 @@ async def binance_roadmap():
         roadmap = []
         for symbol in symbols:
             try:
-                if kalman_returns[symbol] and len(kalman_returns[symbol]) > 0:
+                if kalman_returns[symbol] and len(kalman_returns[symbol]) > 0 and kalman_returns[symbol][-1] > 0:
                     alloc = stat_arb_opportunity(symbol, kalman_returns[symbol], None)
                     if alloc:
                         roadmap.append(alloc)
                         logger.info(f"Allocation ajoutée pour {symbol} : {alloc}")
                         # Passer un ordre réel (commenté pour tests)
-                        # order = submit_binance_order(symbol, alloc['alloc'], alloc['position_type'])
+                        # order = await submit_binance_order(symbol, alloc['alloc'], alloc['position_type'])
                         # if order:
                         #     logger.info(f"Ordre réel passé pour {symbol} : {order}")
                         # else:
