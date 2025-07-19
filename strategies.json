@@ -1,10 +1,26 @@
+
 {
   "roadmap": [
-    {
-      "asset": "ETH/EUR",
-      "alloc": 0.05,
-      "position_type": "buy"
-    }
+    {"asset": "BTC/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "ETH/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "USDT/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "BNB/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "SOL/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "XRP/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "DOGE/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "ADA/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "TRX/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "AVAX/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "SHIB/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "LINK/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "DOT/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "BCH/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "NEAR/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "LTC/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "MATIC/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "PEPE/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "UNI/EUR", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "APT/EUR", "alloc": 0.05, "position_type": "buy"}
   ],
-  "last_reinvestment": "2025-07-18T20:00:00"
+  "last_reinvestment": "2025-07-19T09:00:00"
 }
