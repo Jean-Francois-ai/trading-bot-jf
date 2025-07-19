@@ -10,36 +10,36 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def apply_kalman_filter(data):
-    """Applique un filtre de Kalman pour lisser les rendements."""
+    """Applique un filtre de Kalman aux données de rendements."""
     try:
         if not data or len(data) == 0:
             logger.error("Données vides ou invalides pour le filtre de Kalman")
             return [0]
+        data = np.array(data, dtype=float)
+        n = len(data)
+        if n < 2:
+            logger.warning("Données insuffisantes pour le filtre de Kalman, retour direct")
+            return list(data)
 
         # Paramètres du filtre de Kalman
-        n_iter = len(data)
-        sz = (n_iter,)  # Taille du tableau
-        Q = 1e-5  # Bruit du processus
-        R = 0.1  # Bruit de mesure
-        xhat = np.zeros(sz)  # Estimation filtrée
-        P = np.zeros(sz)  # Covariance de l'erreur
-        xhatminus = np.zeros(sz)  # Estimation prédite
-        Pminus = np.zeros(sz)  # Covariance prédite
-        K = np.zeros(sz)  # Gain de Kalman
-        xhat[0] = data[0]
-        P[0] = 1.0
+        x = np.zeros(n)  # État estimé
+        P = np.ones(n)  # Variance de l'estimation
+        Q = 0.01  # Variance du bruit de processus
+        R = 0.1   # Variance du bruit de mesure
 
-        for k in range(1, n_iter):
+        x[0] = data[0]
+        for t in range(1, n):
             # Prédiction
-            xhatminus[k] = xhat[k-1]
-            Pminus[k] = P[k-1] + Q
-            # Mise à jour
-            K[k] = Pminus[k] / (Pminus[k] + R)
-            xhat[k] = xhatminus[k] + K[k] * (data[k] - xhatminus[k])
-            P[k] = (1 - K[k]) * Pminus[k]
+            x_pred = x[t-1]
+            P_pred = P[t-1] + Q
 
-        logger.info(f"Filtre de Kalman appliqué : {xhat.tolist()}")
-        return xhat.tolist()
+            # Mise à jour
+            K = P_pred / (P_pred + R)  # Gain de Kalman
+            x[t] = x_pred + K * (data[t] - x_pred)
+            P[t] = (1 - K) * P_pred
+
+        logger.info(f"Filtre de Kalman appliqué : {list(x)}")
+        return list(x)
     except Exception as e:
         logger.error(f"Erreur application filtre de Kalman : {str(e)}")
         return [0]
