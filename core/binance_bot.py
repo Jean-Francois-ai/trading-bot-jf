@@ -38,8 +38,13 @@ async def binance_roadmap():
         returns = {}
         for symbol in symbols:
             try:
-                returns[symbol] = await fetch_binance_prices(symbol)
-                logger.info(f"Rendements récupérés pour {symbol} : {returns[symbol]}")
+                prices = await fetch_binance_prices(symbol)
+                if prices and 'close' in prices and 'open' in prices:
+                    returns[symbol] = [(prices['close'] - prices['open']) / prices['open']]
+                    logger.info(f"Rendements récupérés pour {symbol} : {returns[symbol]}")
+                else:
+                    logger.error(f"Données de prix invalides pour {symbol}")
+                    returns[symbol] = [0]
             except Exception as e:
                 logger.error(f"Erreur récupération rendements pour {symbol} : {str(e)}")
                 returns[symbol] = [0]
