@@ -8,7 +8,7 @@ import sys
 
 # Configurer le logging
 logging.basicConfig(
-    filename='binance_bot.log',
+    filename='/root/trading-bot-jf/binance_bot.log',
     format='%(asctime)s %(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -26,7 +26,7 @@ async def binance_roadmap():
     try:
         logger.info("Début de la génération de la roadmap Binance")
         # Charger les stratégies depuis strategies.json
-        with open('strategies.json', 'r') as f:
+        with open('/root/trading-bot-jf/strategies.json', 'r') as f:
             strategy_json = json.load(f)
         logger.info(f"strategies.json chargé : {strategy_json}")
 
@@ -93,7 +93,7 @@ async def binance_roadmap():
                     logger.error(f"Erreur stat_arb_opportunity pour {symbol} : {str(e)}")
 
         # Sauvegarder la roadmap partielle
-        with open('roadmaps/binance_roadmap.json', 'w') as f:
+        with open('/root/trading-bot-jf/roadmaps/binance_roadmap.json', 'w') as f:
             json.dump(roadmap, f, indent=2)
         logger.info(f"Roadmap Binance sauvegardée : {roadmap}")
         return roadmap
