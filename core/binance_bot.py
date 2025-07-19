@@ -54,30 +54,43 @@ async def binance_roadmap():
         for symbol, data in returns.items():
             try:
                 kalman_returns[symbol] = apply_kalman_filter(data)
-                logger.info(f"Rendements Kalman pour {symbol} : {kalman_returns[symbol]}")
+                if kalman_returns[symbol] and kalman_returns[symbol][-1] == 0:
+                    logger.warning(f"Rendement Kalman nul pour {symbol}, ignoré")
+                    kalman_returns[symbol] = [0]
+                else:
+                    logger.info(f"Rendements Kalman pour {symbol} : {kalman_returns[symbol]}")
             except Exception as e:
                 logger.error(f"Erreur Kalman pour {symbol} : {str(e)}")
                 kalman_returns[symbol] = [0]
 
-        # Générer la roadmap
+        # Générer la roadmap avec allocation dynamique
+        total_btc = 0.015  # Balance BTC disponible
         roadmap = []
-        for symbol in symbols:
-            try:
-                if kalman_returns[symbol] and len(kalman_returns[symbol]) > 0 and kalman_returns[symbol][-1] > 0:
-                    alloc = stat_arb_opportunity(symbol, kalman_returns[symbol], None)
-                    if alloc:
-                        roadmap.append(alloc)
-                        logger.info(f"Allocation ajoutée pour {symbol} : {alloc}")
-                        # Passer un ordre réel (commenté pour tests)
-                        # order = await submit_binance_order(symbol, alloc['alloc'], alloc['position_type'])
-                        # if order:
-                        #     logger.info(f"Ordre réel passé pour {symbol} : {order}")
-                        # else:
-                        #     logger.error(f"Échec passage ordre pour {symbol}")
-                    else:
-                        logger.info(f"Aucune allocation pour {symbol}")
-            except Exception as e:
-                logger.error(f"Erreur stat_arb_opportunity pour {symbol} : {str(e)}")
+        valid_returns = [(symbol, ret[-1]) for symbol, ret in kalman_returns.items() if ret and ret[-1] > 0]
+        if not valid_returns:
+            logger.info("Aucun rendement positif détecté, roadmap vide")
+            roadmap = []
+        else:
+            total_weight = sum(max(0, ret) for _, ret in valid_returns)
+            for symbol, ret in valid_returns:
+                try:
+                    alloc = (ret / total_weight) * total_btc if total_weight > 0 else 0
+                    if alloc > 0:
+                        alloc_data = stat_arb_opportunity(symbol, kalman_returns[symbol], None)
+                        if alloc_data:
+                            alloc_data['alloc'] = min(alloc, 0.05)  # Limite à 5% par actif
+                            roadmap.append(alloc_data)
+                            logger.info(f"Allocation ajoutée pour {symbol} : {alloc_data}")
+                            # Passer un ordre réel (commenté pour tests)
+                            # order = await submit_binance_order(symbol, alloc_data['alloc'], alloc_data['position_type'])
+                            # if order:
+                            #     logger.info(f"Ordre réel passé pour {symbol} : {order}")
+                            # else:
+                            #     logger.error(f"Échec passage ordre pour {symbol}")
+                        else:
+                            logger.info(f"Aucune allocation pour {symbol}")
+                except Exception as e:
+                    logger.error(f"Erreur stat_arb_opportunity pour {symbol} : {str(e)}")
 
         # Sauvegarder la roadmap partielle
         with open('roadmaps/binance_roadmap.json', 'w') as f:
