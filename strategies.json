@@ -1,5 +1,6 @@
 {
   "roadmap": [
+<<<<<<< HEAD
     {
       "asset": "SPY",
       "alloc": 0.1,
@@ -15,6 +16,25 @@
       "alloc": 0.1,
       "position_type": "buy"
     }
+=======
+    {"asset": "BTC/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "ETH/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "BNB/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "SOL/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "XRP/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "DOGE/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "ADA/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "TRX/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "AVAX/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "SHIB/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "LINK/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "DOT/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "BCH/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "NEAR/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "LTC/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "MATIC/USDC", "alloc": 0.05, "position_type": "buy"},
+    {"asset": "UNI/USDC", "alloc": 0.05, "position_type": "buy"}
+>>>>>>> 38e4a76c1166096bcddb85580f070c9817da5761
   ],
   "last_reinvestment": "2025-07-19T09:00:00"
 }
