@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 # Configurer le logging
 logging.basicConfig(
-    filename='supervisor_bot.log',
+    filename='logs/supervisor_bot.log',
     format='%(asctime)s %(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -36,12 +36,17 @@ async def supervisor_roadmap():
         logger.info("Début de la consolidation des roadmaps")
         now = datetime.now()
         is_weekend = now.weekday() >= 5
-        roadmap_files = ['roadmaps/binance_roadmap.json']
+        roadmap_files = [
+            'roadmaps/binance_roadmap.json',
+            'roadmaps/alpaca_roadmap.json',
+            'roadmaps/kraken_roadmap.json',
+            'roadmaps/oanda_roadmap.json'
+        ]
         roadmap = []
         kalman_returns = {}
         errors = []
 
-        # Lire les roadmaps partielles (Binance uniquement)
+        # Lire les roadmaps partielles
         for file in roadmap_files:
             try:
                 with open(file, 'r') as f:
@@ -53,7 +58,7 @@ async def supervisor_roadmap():
                 errors.append(f"Erreur lecture {file}: {str(e)}")
 
         # Collecter les rendements Kalman depuis les logs
-        log_files = ['binance_bot.log']
+        log_files = ['logs/binance_bot.log', 'logs/alpaca_bot.log', 'logs/kraken_bot.log', 'logs/oanda_bot.log']
         for log_file in log_files:
             try:
                 with open(log_file, 'r') as f:
@@ -73,7 +78,7 @@ async def supervisor_roadmap():
         # Charger les stratégies
         with open('strategies.json', 'r') as f:
             strategy_json = json.load(f)
-        strategy_json['roadmap'] = roadmap if roadmap else [{"asset": "ETH/EUR", "alloc": 0.05, "position_type": "buy"}]
+        strategy_json['roadmap'] = roadmap if roadmap else strategy_json['roadmap']
         logger.info(f"Roadmap consolidée : {strategy_json['roadmap']}")
 
         # Consulter DeepSeek via OpenRouter
@@ -99,10 +104,10 @@ async def supervisor_roadmap():
         message = (
             f"📊 Roadmap: {json.dumps(strategy_json['roadmap'], indent=2)}\n"
             f"💡 Conseils DeepSeek : {advice}\n"
-            "📈 Trades réels (Binance)\n"
+            f"📈 Trades réels (Binance, Alpaca, Kraken, Oanda)\n"
         )
         if is_weekend:
-            message += "🔔 Week-end : seuls les cryptos (Binance) sont actifs\n"
+            message += "🔔 Week-end : seuls les cryptos (Binance, Kraken) sont actifs\n"
         if errors:
             message += f"⚠️ Erreurs détectées : {'; '.join(errors)}\n"
         message += "⚠️ Aucune garantie de profit, risques élevés (AMF conformité)"
